@@ -25,4 +25,17 @@ func TestCellFunctions(t *testing.T) {
 				c.Linked(&want), want)
 		}
 	})
+
+	t.Run("it unlinks the correct cell", func(t *testing.T) {
+		c := NewCell(0, 0)
+		want := NewCell(0, 1)
+
+		c.Link(&want, true)
+		c.Unlink(&want, true)
+
+		if c.Linked(&want) != false {
+			t.Errorf("cells were not linked properly, got %v but wanted %v",
+				c.Linked(&want), want)
+		}
+	})
 }

@@ -13,4 +13,16 @@ func TestCellFunctions(t *testing.T) {
 			t.Errorf("got %d, want %d", len(c.LinkKeys()), 1)
 		}
 	})
+
+	t.Run("it links the correct cell", func(t *testing.T) {
+		c := NewCell(0, 0)
+		want := NewCell(1, 1)
+
+		c.Link(&want, true)
+
+		if c.Linked(&want) != want.Linked(&c) {
+			t.Errorf("cells were not linked properly, got %v but wanted %v",
+				c.Linked(&want), want)
+		}
+	})
 }

@@ -43,3 +43,20 @@ func (c *Cell) LinkKeys() []*Cell {
 func (c *Cell) Linked(cell *Cell) bool {
 	return c.Links[cell]
 }
+
+func (c *Cell) Neighbors() []*Cell {
+	neighbors := make([]*Cell, 0)
+	if c.North != nil {
+		neighbors = append(neighbors, c.North)
+	}
+	if c.East != nil {
+		neighbors = append(neighbors, c.East)
+	}
+	if c.South != nil {
+		neighbors = append(neighbors, c.South)
+	}
+	if c.West != nil {
+		neighbors = append(neighbors, c.West)
+	}
+	return neighbors
+}

@@ -49,3 +49,10 @@ func configureCells(g [][]*Cell) [][]*Cell {
 	}
 	return g
 }
+
+func (g *Grid) Get(row, col int) *Cell {
+	if (row >= 0 && row < g.Rows) && (col >= 0 && col < g.Cols) {
+		return g.Grid[row][col]
+	}
+	return nil
+}

@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"math/rand"
+	"testing"
+)
 
 func TestGridSetup(t *testing.T) {
 	t.Run("Tests the initilization of a grid",
@@ -78,6 +81,46 @@ func TestGridSetup(t *testing.T) {
 
 		if got != nil {
 			t.Errorf("got %v want %v", got, nil)
+		}
+	})
+
+	t.Run("returns a random cell", func(t *testing.T) {
+		grid := NewGrid(4, 4)
+		randGen = rand.New(rand.NewSource(42))
+
+		got := grid.RandomCell()
+		want := grid.Get(1, 3)
+
+		if got != want {
+			t.Errorf("got %v but wanted %v", got, want)
+		}
+	})
+
+	t.Run("loops over each row in a grid", func(t *testing.T) {
+		grid := NewGrid(2, 2)
+
+		got := 0
+		for range grid.EachRow() {
+			got += 1
+		}
+		want := 2
+
+		if got != want {
+			t.Errorf("got %v row, want %v rows", got, want)
+		}
+	})
+
+	t.Run("loops over each cell in a grid", func(t *testing.T) {
+		grid := NewGrid(2, 2)
+
+		got := 0
+		for range grid.EachCell() {
+			got += 1
+		}
+		want := 4
+
+		if got != want {
+			t.Errorf("got %v row, want %v rows", got, want)
 		}
 	})
 }

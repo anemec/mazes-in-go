@@ -10,8 +10,8 @@ type Cell struct {
 	Col   int
 }
 
-func NewCell(row, col int) Cell {
-	return Cell{nil, nil, nil, nil, make(map[*Cell]bool), row, col}
+func NewCell(row, col int) *Cell {
+	return &Cell{nil, nil, nil, nil, make(map[*Cell]bool), row, col}
 }
 
 func (c *Cell) Link(cell *Cell, bidi bool) *Cell {

@@ -7,7 +7,7 @@ func TestCellFunctions(t *testing.T) {
 		c := NewCell(0, 0)
 
 		want := NewCell(1, 1)
-		c.Link(&want, true)
+		c.Link(want, true)
 
 		if len(c.LinkKeys()) != 1 {
 			t.Errorf("got %d, want %d", len(c.LinkKeys()), 1)
@@ -18,11 +18,11 @@ func TestCellFunctions(t *testing.T) {
 		c := NewCell(0, 0)
 		want := NewCell(1, 1)
 
-		c.Link(&want, true)
+		c.Link(want, true)
 
-		if c.Linked(&want) != want.Linked(&c) {
+		if c.Linked(want) != want.Linked(c) {
 			t.Errorf("cells were not linked properly, got %v but wanted %v",
-				c.Linked(&want), want)
+				c.Linked(want), want)
 		}
 	})
 
@@ -30,12 +30,12 @@ func TestCellFunctions(t *testing.T) {
 		c := NewCell(0, 0)
 		want := NewCell(0, 1)
 
-		c.Link(&want, true)
-		c.Unlink(&want, true)
+		c.Link(want, true)
+		c.Unlink(want, true)
 
-		if c.Linked(&want) != false {
+		if c.Linked(want) != false {
 			t.Errorf("cells were not linked properly, got %v but wanted %v",
-				c.Linked(&want), want)
+				c.Linked(want), want)
 		}
 	})
 
@@ -43,10 +43,10 @@ func TestCellFunctions(t *testing.T) {
 		c := NewCell(1, 1)
 		northCell := NewCell(0, 1)
 
-		c.North = &northCell
+		c.North = northCell
 		got := c.Neighbors()
 
-		if got[0] != &northCell {
+		if got[0] != northCell {
 			t.Errorf("Neighbors does not return the correct cells, got %v want %v",
 				got, northCell)
 		}
@@ -59,10 +59,10 @@ func TestCellFunctions(t *testing.T) {
 		southCell := NewCell(2, 1)
 		westCell := NewCell(1, 0)
 
-		c.North = &northCell
-		c.East = &eastCell
-		c.South = &southCell
-		c.West = &westCell
+		c.North = northCell
+		c.East = eastCell
+		c.South = southCell
+		c.West = westCell
 		got := c.Neighbors()
 
 		if len(got) != 4 {

@@ -6,12 +6,17 @@ import (
 
 func main() {
 	fmt.Println("Welcome to Mazes!")
-	grid := NewGrid(4, 4)
+	rows := 20
+	cols := 20
+	grid := NewGrid(rows, cols)
 	bt := BinaryTree{
 		grid,
 	}
 
-	bt.On()
+	// bt.On()
 	// fmt.Println(bt.g.String())
-	fmt.Println(&bt.g)
+	// fmt.Println(&bt.g)
+	_ = bt
+	grid.Sidewinder()
+	fmt.Println(&grid)
 }

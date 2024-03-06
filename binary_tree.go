@@ -6,6 +6,7 @@ type BinaryTree struct {
 	g Grid
 }
 
+// TODO: Add tests
 func (bt BinaryTree) On() {
 	for cell := range bt.g.EachCell() {
 		neighbors := []*Cell{}

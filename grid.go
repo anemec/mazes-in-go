@@ -1,8 +1,12 @@
 package main
 
 import (
+	"image"
+	"image/color"
 	"math/rand"
 	"strings"
+
+	"github.com/llgcode/draw2d/draw2dimg"
 )
 
 var randGen = rand.New(rand.NewSource(42))
@@ -23,8 +27,6 @@ func NewGrid(rows, cols int) Grid {
 	}
 	return grid
 }
-
-// TODO: Implement Stringer interface
 
 func prepareGrid(rows, cols int) [][]*Cell {
 	grid := make([][]*Cell, rows)
@@ -99,6 +101,53 @@ func (g *Grid) EachCell() <-chan *Cell {
 		}
 	}()
 	return ch
+}
+
+func (g *Grid) ToPNG(cellSize int) {
+	imgWidth := cellSize*g.Cols + 2
+	imgHeight := cellSize*g.Rows + 2
+
+	dest := image.NewRGBA(image.Rect(0, 0, imgWidth, imgHeight))
+	gc := draw2dimg.NewGraphicContext(dest)
+	gc.SetStrokeColor(color.Black)
+	gc.SetLineWidth(1)
+
+	for cell := range g.EachCell() {
+		drawSquare(gc, cell)
+		gc.Stroke()
+	}
+
+	draw2dimg.SaveToPngFile("maze.png", dest)
+}
+
+func drawSquare(gc *draw2dimg.GraphicContext, cell *Cell) {
+	x1 := float64(10.0 * cell.Col)
+	y1 := float64(10.0 * cell.Row)
+	x2 := float64(10.0 * (cell.Col + 1))
+	y2 := float64(10.0 * (cell.Row + 1))
+
+	gc.BeginPath()
+	gc.MoveTo(x1, y1)
+	if !cell.Linked(cell.North) {
+		gc.LineTo(x2, y1)
+	} else {
+		gc.MoveTo(x2, y1)
+	}
+	if !cell.Linked(cell.East) {
+		gc.LineTo(x2, y2)
+	} else {
+		gc.MoveTo(x2, y2)
+	}
+	if !cell.Linked(cell.South) {
+		gc.LineTo(x1, y2)
+	} else {
+		gc.MoveTo(x1, y2)
+	}
+	if !cell.Linked(cell.West) {
+		gc.LineTo(x1, y1)
+	}
+	gc.MoveTo(x1, y1)
+	gc.Close()
 }
 
 func (g *Grid) String() string {

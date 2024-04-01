@@ -6,8 +6,8 @@ import (
 
 func main() {
 	fmt.Println("Welcome to Mazes!")
-	rows := 20
-	cols := 20
+	rows := 100
+	cols := 100
 	grid := NewGrid(rows, cols)
 	bt := BinaryTree{
 		grid,
@@ -18,5 +18,6 @@ func main() {
 	// fmt.Println(&bt.g)
 	_ = bt
 	grid.Sidewinder()
-	fmt.Println(&grid)
+	// fmt.Println(&grid)
+	grid.ToPNG(10)
 }

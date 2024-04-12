@@ -128,7 +128,7 @@ func drawSquare(gc *draw2dimg.GraphicContext, cell *Cell) {
 
 	gc.BeginPath()
 	gc.MoveTo(x1, y1)
-	if !cell.Linked(cell.North) {
+	if cell.North == nil {
 		gc.LineTo(x2, y1)
 	} else {
 		gc.MoveTo(x2, y1)
@@ -143,7 +143,7 @@ func drawSquare(gc *draw2dimg.GraphicContext, cell *Cell) {
 	} else {
 		gc.MoveTo(x1, y2)
 	}
-	if !cell.Linked(cell.West) {
+	if cell.West == nil {
 		gc.LineTo(x1, y1)
 	}
 	gc.MoveTo(x1, y1)

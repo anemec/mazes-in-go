@@ -113,18 +113,18 @@ func (g *Grid) ToPNG(cellSize int) {
 	gc.SetLineWidth(1)
 
 	for cell := range g.EachCell() {
-		drawSquare(gc, cell)
+		drawSquare(gc, cell, float64(cellSize))
 		gc.Stroke()
 	}
 
 	draw2dimg.SaveToPngFile("maze.png", dest)
 }
 
-func drawSquare(gc *draw2dimg.GraphicContext, cell *Cell) {
-	x1 := float64(10.0 * cell.Col)
-	y1 := float64(10.0 * cell.Row)
-	x2 := float64(10.0 * (cell.Col + 1))
-	y2 := float64(10.0 * (cell.Row + 1))
+func drawSquare(gc *draw2dimg.GraphicContext, cell *Cell, size float64) {
+	x1 := size * float64(cell.Col)
+	y1 := size * float64(cell.Row)
+	x2 := size * float64(cell.Col+1)
+	y2 := size * float64(cell.Row+1)
 
 	gc.BeginPath()
 	gc.MoveTo(x1, y1)

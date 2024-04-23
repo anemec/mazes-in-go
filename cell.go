@@ -60,3 +60,21 @@ func (c *Cell) Neighbors() []*Cell {
 	}
 	return neighbors
 }
+
+func (c *Cell) Distances() Distances {
+	distances := NewDistances(c)
+	frontier := []*Cell{c}
+	for len(frontier) > 0 {
+		newFrontier := make([]*Cell, 0)
+		for _, cell := range frontier {
+			for _, linked := range cell.LinkKeys() {
+				if value, exists := distances.Get(linked); !exists {
+					distances.Set(linked, value+1)
+					newFrontier = append(newFrontier, linked)
+				}
+			}
+		}
+		frontier = newFrontier
+	}
+	return distances
+}
